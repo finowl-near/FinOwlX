@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  poster:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: twitter-poster
+    environment:
+      - GOTWI_API_KEY=${GOTWI_API_KEY}
+      - GOTWI_API_KEY_SECRET=${GOTWI_API_KEY_SECRET}
+      - GOTWI_ACCESS_TOKEN=${GOTWI_ACCESS_TOKEN}
+      - GOTWI_ACCESS_TOKEN_SECRET=${GOTWI_ACCESS_TOKEN_SECRET}
+      - DEFAULT_TWEET_TEXT=${DEFAULT_TWEET_TEXT}
+      - FINOWL_START_ID=${FINOWL_START_ID:-105}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+    # Use Finowl mode by default
+    command: -finowl
+    volumes:
+      - ./.env:/root/.env
+    restart: unless-stopped
+
+  # Add any other services you might have
+  # For example:
+  # finowl:
+  #   image: your-finowl-image
+  #   container_name: finowl
+  #   volumes:
+  #     - ./.env:/root/.env
+  #   restart: unless-stopped 
